@@ -20,15 +20,15 @@ export interface TribeColor {
 const RED: TribeColor = { dot: 'bg-red-500', card: 'bg-red-600 border-red-500', panelBg: 'bg-red-900', text: 'text-red-400', border: 'border-red-500' }
 const BLUE: TribeColor = { dot: 'bg-blue-500', card: 'bg-blue-600 border-blue-500', panelBg: 'bg-blue-900', text: 'text-blue-400', border: 'border-blue-500' }
 const GREEN: TribeColor = { dot: 'bg-green-500', card: 'bg-green-600 border-green-500', panelBg: 'bg-green-900', text: 'text-green-400', border: 'border-green-500' }
-const PURPLE: TribeColor = { dot: 'bg-purple-500', card: 'bg-purple-600 border-purple-500', panelBg: 'bg-purple-900', text: 'text-purple-400', border: 'border-purple-500' }
+const GOLD: TribeColor = { dot: 'bg-amber-500', card: 'bg-amber-600 border-amber-500', panelBg: 'bg-amber-900', text: 'text-amber-400', border: 'border-amber-500' }
 const GRAY: TribeColor = { dot: 'bg-gray-500', card: 'bg-gray-600 border-gray-500', panelBg: 'bg-gray-900', text: 'text-gray-400', border: 'border-gray-500' }
 
 const TRIBE_COLORS: Record<string, TribeColor> = {
   Dakal: RED,
   Sele: BLUE,
   Yara: GREEN,
-  Koru: PURPLE,
-  merged: PURPLE,
+  Koru: GOLD,
+  merged: GOLD,
 }
 
 /** Canonical color set for a tribe name, falling back to neutral gray. */
