@@ -6,12 +6,13 @@ import { useSimulationStore } from '@/lib/stores/simulation-store'
 import PlaybackControls from '@/components/PlaybackControls'
 import EpisodeViewer from '@/components/EpisodeViewer'
 import CastPanel from '@/components/CastPanel'
+import { downloadJSON, downloadCSV, episodeSummaryRows } from '@/lib/export'
 
 export default function SimulateByIdPage() {
   const router = useRouter()
   const params = useParams()
   const id = params?.id as string
-  const { setEpisodes, reset } = useSimulationStore()
+  const { episodes, setEpisodes, reset } = useSimulationStore()
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -126,6 +127,20 @@ export default function SimulateByIdPage() {
 
         {/* Bottom Actions */}
         <div className="flex flex-wrap gap-4 justify-center pb-8 pt-4 border-t border-gray-700">
+          <button
+            onClick={() => downloadJSON(`simulation-${id}.json`, episodes)}
+            disabled={episodes.length === 0}
+            className="bg-green-700 hover:bg-green-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-bold py-3 px-8 rounded-lg transition-colors"
+          >
+            ⬇ Export JSON
+          </button>
+          <button
+            onClick={() => downloadCSV(`simulation-${id}.csv`, episodeSummaryRows(episodes))}
+            disabled={episodes.length === 0}
+            className="bg-green-700 hover:bg-green-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-bold py-3 px-8 rounded-lg transition-colors"
+          >
+            ⬇ Export CSV
+          </button>
           <button
             onClick={() => router.push('/create')}
             className="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-8 rounded-lg transition-colors"

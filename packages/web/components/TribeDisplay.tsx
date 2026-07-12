@@ -1,4 +1,5 @@
 import PlayerCard from './PlayerCard'
+import { tribeColor } from '@/lib/tribe-colors'
 
 interface TribeDisplayProps {
   tribeName: string
@@ -11,20 +12,11 @@ interface TribeDisplayProps {
   isImmune?: boolean
 }
 
-const TRIBE_COLORS: Record<string, { bg: string; text: string; border: string }> = {
-  'Dakal': { bg: 'bg-red-900', text: 'text-red-400', border: 'border-red-500' },
-  'Sele': { bg: 'bg-blue-900', text: 'text-blue-400', border: 'border-blue-500' },
-  'Yara': { bg: 'bg-green-900', text: 'text-green-400', border: 'border-green-500' },
-  'Koru': { bg: 'bg-purple-900', text: 'text-purple-400', border: 'border-purple-500' },
-  'merged': { bg: 'bg-purple-900', text: 'text-purple-400', border: 'border-purple-500' },
-  'default': { bg: 'bg-gray-900', text: 'text-gray-400', border: 'border-gray-500' },
-}
-
 export default function TribeDisplay({ tribeName, players, isImmune = false }: TribeDisplayProps) {
-  const colors = TRIBE_COLORS[tribeName] || TRIBE_COLORS['default']
+  const colors = tribeColor(tribeName)
 
   return (
-    <div className={`${colors.bg} rounded-lg p-4 border-2 ${colors.border}`}>
+    <div className={`${colors.panelBg} rounded-lg p-4 border-2 ${colors.border}`}>
       <div className="flex items-center justify-between mb-4">
         <h2 className={`text-2xl font-bold ${colors.text}`}>
           {tribeName}

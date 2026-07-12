@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 
 interface VoteRevealProps {
   votes: string[] // Array of names in the order they should be revealed
@@ -110,62 +111,80 @@ export default function VoteReveal({
       {/* Vote Count Display */}
       <div className="mb-6">
         <div className="flex flex-wrap gap-4">
-          {Object.entries(voteCounts).sort((a, b) => b[1] - a[1]).map(([player, count]) => (
-            <div key={player} className="bg-gray-700 rounded-lg px-4 py-2">
-              <div className="text-orange-400 font-bold text-lg">{player}</div>
-              <div className="text-gray-300 text-sm">{count} {count === 1 ? 'vote' : 'votes'}</div>
-            </div>
-          ))}
+          <AnimatePresence>
+            {Object.entries(voteCounts).sort((a, b) => b[1] - a[1]).map(([player, count]) => (
+              <motion.div
+                key={player}
+                layout
+                initial={{ opacity: 0, scale: 0.6 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.6 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                className="bg-gray-700 rounded-lg px-4 py-2"
+              >
+                <div className="text-orange-400 font-bold text-lg">{player}</div>
+                <motion.div key={count} className="text-gray-300 text-sm">
+                  {count} {count === 1 ? 'vote' : 'votes'}
+                </motion.div>
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
       </div>
 
       {/* Vote Parchments */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3" style={{ perspective: 800 }}>
         {votes.map((vote, index) => {
           const revealed = index < revealedCount
           const nullified = revealed && isNullified(vote)
           return (
-            <div
+            <motion.div
               key={index}
-              className={`relative aspect-[3/4] rounded-lg transition-all duration-500 ${
-                revealed
-                  ? nullified
-                    ? 'bg-gray-300 border-2 border-gray-400 scale-100 opacity-80'
-                    : 'bg-amber-100 border-2 border-amber-600 scale-100 opacity-100'
-                  : 'bg-gray-700 border-2 border-gray-600 scale-95 opacity-40'
-              }`}
+              initial={false}
+              animate={{ rotateY: revealed ? 180 : 0 }}
+              transition={{ type: 'spring', stiffness: 260, damping: 24 }}
+              style={{ transformStyle: 'preserve-3d' }}
+              className="relative aspect-[3/4]"
             >
-              <div className="absolute inset-0 flex flex-col items-center justify-center p-2">
-                {revealed ? (
-                  <div className="text-center">
-                    <div className={`font-bold text-lg break-words leading-tight ${nullified ? 'line-through text-gray-500' : 'text-gray-900'}`}>
-                      {vote}
-                    </div>
-                    {voteDetails?.[index] && (
-                      <div className={`mt-1 text-xs break-words leading-tight ${nullified ? 'text-gray-400' : 'text-gray-600'}`}>
-                        — {voteDetails[index].voter}
-                      </div>
-                    )}
-                    {nullified && (
-                      <div className="mt-2 text-red-500 text-xs font-bold uppercase tracking-wide">Does not count</div>
-                    )}
-                  </div>
-                ) : (
-                  <div className="text-gray-500 text-4xl">?</div>
-                )}
+              {/* Back face: face-down parchment */}
+              <div
+                className="absolute inset-0 rounded-lg bg-gray-700 border-2 border-gray-600 flex items-center justify-center"
+                style={{ backfaceVisibility: 'hidden' }}
+              >
+                <span className="text-gray-500 text-4xl">?</span>
               </div>
-              {/* Nullified overlay X */}
-              {nullified && (
-                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <span className="text-red-400 text-5xl font-black opacity-30 select-none">✕</span>
+
+              {/* Front face: revealed vote (pre-rotated so it faces out at 180deg) */}
+              <div
+                className={`absolute inset-0 rounded-lg flex flex-col items-center justify-center p-2 ${
+                  nullified ? 'bg-gray-300 border-2 border-gray-400' : 'bg-amber-100 border-2 border-amber-600'
+                }`}
+                style={{ backfaceVisibility: 'hidden', transform: 'rotateY(180deg)' }}
+              >
+                <div className="text-center">
+                  <div className={`font-bold text-lg break-words leading-tight ${nullified ? 'line-through text-gray-500' : 'text-gray-900'}`}>
+                    {vote}
+                  </div>
+                  {voteDetails?.[index] && (
+                    <div className={`mt-1 text-xs break-words leading-tight ${nullified ? 'text-gray-400' : 'text-gray-600'}`}>
+                      — {voteDetails[index].voter}
+                    </div>
+                  )}
+                  {nullified && (
+                    <div className="mt-2 text-red-500 text-xs font-bold uppercase tracking-wide">Does not count</div>
+                  )}
                 </div>
-              )}
-              {revealed && (
+                {/* Nullified overlay X */}
+                {nullified && (
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <span className="text-red-400 text-5xl font-black opacity-30 select-none">✕</span>
+                  </div>
+                )}
                 <div className={`absolute top-1 right-1 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center ${nullified ? 'bg-gray-500' : 'bg-orange-600'}`}>
                   {index + 1}
                 </div>
-              )}
-            </div>
+              </div>
+            </motion.div>
           )
         })}
       </div>

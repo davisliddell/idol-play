@@ -3,18 +3,7 @@
 import { useMemo } from 'react'
 import { useSimulationStore } from '@/lib/stores/simulation-store'
 import { deriveCast, type CastMember } from '@/lib/cast'
-
-// Stable-ish color per tribe name so the same tribe reads the same across episodes.
-const TRIBE_COLORS: Record<string, string> = {
-  Dakal: 'bg-purple-500',
-  Sele: 'bg-emerald-500',
-  Yara: 'bg-sky-500',
-  Koru: 'bg-orange-500',
-}
-const FALLBACK_COLORS = ['bg-rose-500', 'bg-amber-500', 'bg-teal-500', 'bg-indigo-500']
-function tribeColor(name: string, index: number) {
-  return TRIBE_COLORS[name] || FALLBACK_COLORS[index % FALLBACK_COLORS.length]
-}
+import { tribeColor } from '@/lib/tribe-colors'
 
 function Chip({ member, dot }: { member: CastMember; dot?: string }) {
   return (
@@ -54,20 +43,21 @@ export default function CastPanel() {
 
       {/* Still in the game, grouped by tribe */}
       <div className="space-y-3">
-        {cast.tribes.map((tribe, i) => {
+        {cast.tribes.map((tribe) => {
           const members = active.filter(m => m.tribe === tribe)
           if (!members.length) return null
+          const dot = tribeColor(tribe).dot
           return (
             <div key={tribe}>
               <div className="flex items-center gap-2 mb-1.5">
-                <span className={`w-2.5 h-2.5 rounded-full ${tribeColor(tribe, i)}`} />
+                <span className={`w-2.5 h-2.5 rounded-full ${dot}`} />
                 <span className="text-xs font-semibold uppercase tracking-wide text-gray-400">
                   {cast.merged ? 'Merged' : tribe} · {members.length}
                 </span>
               </div>
               <div className="flex flex-wrap gap-1.5">
                 {members.map(m => (
-                  <Chip key={m.first} member={m} dot={tribeColor(tribe, i)} />
+                  <Chip key={m.first} member={m} dot={dot} />
                 ))}
               </div>
             </div>

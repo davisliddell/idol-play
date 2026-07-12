@@ -19,16 +19,19 @@ A comprehensive Survivor game simulation platform built with Next.js 15, TypeScr
 - ✅ **DataParser** - JSON parsing and validation for player input
 - ✅ **API Routes** - REST endpoints for running simulations
 
-### 🚧 In Progress / TODO
+#### Frontend (Complete)
+- ✅ **Player entry form** - Create a custom 20-player cast with attribute sliders
+- ✅ **Simulation viewer** - Episode-by-episode playback with scrubber and speed control
+- ✅ **Results dashboard** - Win reveals, alliances, and vote animations
+- ✅ **Multiple simulation results** - Win-rate statistics across many runs
+- ✅ **React component library** - CastPanel, EpisodeViewer, VoteReveal, TribeDisplay, etc.
+- ✅ **State management** - Zustand store for playback
+- ✅ **Animations** - Framer Motion vote-card flips, phase transitions, and winner reveal
+- ✅ **Export** - Download results as JSON or CSV; save/load rosters to localStorage
 
-#### Frontend Components
-- ⏳ Player entry form (20 players with 7 attributes each)
-- ⏳ Simulation viewer with episode playback
-- ⏳ Results dashboard
-- ⏳ Multiple simulation results page
-- ⏳ React component library
-- ⏳ State management (Zustand)
-- ⏳ Tailwind styling and animations
+### 🚧 In Progress / TODO
+- ⏳ Broader UI component test coverage (engine is covered)
+- ⏳ Deployment to Vercel
 
 ## Quick Start
 
@@ -50,6 +53,10 @@ pnpm build
 
 # Start production server
 pnpm start
+
+# Run the test suite
+pnpm --filter web test          # single run
+pnpm --filter web test:watch    # watch mode
 ```
 
 The app will be available at `http://localhost:3000`.
@@ -75,31 +82,29 @@ idol-play/
 │   └── web/                     # Next.js app
 │       ├── app/                 # Next.js App Router
 │       │   ├── page.tsx         # Home page
-│       │   ├── layout.tsx       # Root layout
-│       │   ├── globals.css      # Global styles
-│       │   └── api/             # API routes
-│       │       ├── simulate/    # Single simulation endpoint
-│       │       ├── simulate-multiple/  # Multiple simulations
-│       │       └── health/      # Health check
+│       │   ├── create/          # Cast creation form
+│       │   ├── simulate/[id]/   # Simulation viewer (playback)
+│       │   ├── results/multiple/ # Multi-sim statistics
+│       │   └── api/             # API routes (simulate, simulations, health, ...)
+│       ├── components/          # React components (EpisodeViewer, VoteReveal, ...)
 │       ├── lib/
+│       │   ├── export.ts        # JSON/CSV export helpers (+ export.test.ts)
+│       │   ├── db/              # Simulation persistence
+│       │   ├── stores/         # Zustand playback store
 │       │   └── simulator/       # Simulation engine (TypeScript port)
-│       │       ├── models/      # Core game models
-│       │       │   ├── player.ts
-│       │       │   ├── bond.ts
-│       │       │   ├── alliance.ts
-│       │       │   ├── voting-bloc.ts
-│       │       │   ├── tribe.ts
-│       │       │   └── merged-tribe.ts
-│       │       ├── challenge.ts # Challenge system
+│       │       ├── config/      # game-constants.ts (tunable config + helpers)
+│       │       ├── engine/      # game-engine.ts, game-events.ts
+│       │       ├── systems/     # challenge / idol / voting systems
+│       │       ├── models/      # player, bond, alliance, voting-bloc, tribe, merged-tribe
 │       │       ├── report.ts    # Episode reporting
-│       │       ├── game.ts      # Game orchestration
-│       │       └── data-parser.ts  # JSON parsing
-│       ├── components/          # React components
-│       ├── tailwind.config.ts   # Tailwind configuration
-│       ├── tsconfig.json        # TypeScript config
-│       └── package.json         # Package dependencies
+│       │       └── data-parser.ts  # JSON parsing + validation
+│       ├── vitest.config.ts     # Test config
+│       └── package.json
 └── README.md
 ```
+
+Tests live next to the code they cover as `*.test.ts` (engine, config, models,
+data parser, and export helpers).
 
 ## Game Simulation Overview
 
@@ -133,6 +138,8 @@ idol-play/
 - **Idol Gameplay**: Hidden immunity idols with strategic play mechanics
 - **Tie-Breaking**: Revotes, rock draws, and fire-making challenges
 - **Episode Reporting**: Detailed JSON output of all game events
+- **Export**: Download a full simulation as JSON or an episode/boot-order CSV
+- **Rosters**: Save and reload custom casts in the browser
 
 ### Player Attributes
 
@@ -233,24 +240,25 @@ All algorithms from the original Java implementation have been preserved:
 - [x] Create API routes
 - [x] Test simulation engine
 
-### Phase 2: Basic Frontend (In Progress)
-- [ ] Player entry form component
-- [ ] Simple simulation runner
-- [ ] Results display
-- [ ] Mobile responsive design
+### Phase 2: Basic Frontend (✅ Complete)
+- [x] Player entry form component
+- [x] Simple simulation runner
+- [x] Results display
+- [x] Mobile responsive design
 
-### Phase 3: Advanced Features
-- [ ] Episode-by-episode playback
-- [ ] Animated vote reveals
-- [ ] Alliance visualization
-- [ ] Multiple simulation statistics
-- [ ] Export results (JSON/CSV)
-- [ ] Save/load player rosters
+### Phase 3: Advanced Features (✅ Complete)
+- [x] Episode-by-episode playback
+- [x] Animated vote reveals
+- [x] Alliance visualization
+- [x] Multiple simulation statistics
+- [x] Export results (JSON/CSV)
+- [x] Save/load player rosters
 
-### Phase 4: Polish
-- [ ] Survivor-themed styling
-- [ ] Animations (Framer Motion)
-- [ ] Comprehensive testing
+### Phase 4: Polish (In Progress)
+- [x] Survivor-themed styling
+- [x] Animations (Framer Motion)
+- [x] Test suite for the simulation engine (Vitest)
+- [ ] Comprehensive UI component testing
 - [ ] Performance optimization
 - [ ] Deployment to Vercel
 
@@ -264,7 +272,9 @@ See `packages/web/lib/simulator/sample-players.json` for example player data (po
 - **TypeScript** - Type-safe development
 - **Tailwind CSS** - Utility-first styling
 - **pnpm** - Fast, efficient package manager
-- **Zustand** - Lightweight state management (planned)
+- **Zustand** - Lightweight state management
+- **Framer Motion** - Animations (vote reveals, transitions)
+- **Vitest** - Unit and integration testing
 
 ## Contributing
 
