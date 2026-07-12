@@ -1,0 +1,182 @@
+[
+  {
+    "firstName": "Tony",
+    "lastName": "Vlachos",
+    "challengeSkill": 3,
+    "strategicLevel": 5,
+    "visibility": 5,
+    "socialLevel": 3,
+    "articulation": 5
+  },
+  {
+    "firstName": "Sandra",
+    "lastName": "Diaz-Twine",
+    "challengeSkill": 1,
+    "strategicLevel": 5,
+    "socialLevel": 5,
+    "visibility": 2,
+    "articulation": 3
+  },
+  {
+    "firstName": "Parvati",
+    "lastName": "Shallow",
+    "challengeSkill": 3,
+    "strategicLevel": 5,
+    "socialLevel": 5,
+    "visibility": 5,
+    "articulation": 5
+  },
+  {
+    "firstName": "Boston Rob",
+    "lastName": "Mariano",
+    "challengeSkill": 4,
+    "strategicLevel": 5,
+    "socialLevel": 5,
+    "visibility": 5,
+    "articulation": 5
+  },
+  {
+    "firstName": "Kim",
+    "lastName": "Spradlin",
+    "challengeSkill": 3,
+    "strategicLevel": 5,
+    "socialLevel": 5,
+    "visibility": 3,
+    "articulation": 5
+  },
+  {
+    "firstName": "Jeremy",
+    "lastName": "Collins",
+    "challengeSkill": 5,
+    "strategicLevel": 5,
+    "socialLevel": 5,
+    "visibility": 3,
+    "articulation": 4
+  },
+  {
+    "firstName": "Sarah",
+    "lastName": "Lacina",
+    "challengeSkill": 3,
+    "strategicLevel": 5,
+    "socialLevel": 3,
+    "visibility": 3,
+    "articulation": 3
+  },
+  {
+    "firstName": "Yul",
+    "lastName": "Kwon",
+    "challengeSkill": 2,
+    "strategicLevel": 5,
+    "socialLevel": 3,
+    "visibility": 3,
+    "articulation": 5
+  },
+  {
+    "firstName": "Denise",
+    "lastName": "Stapley",
+    "challengeSkill": 3,
+    "strategicLevel": 4,
+    "socialLevel": 5,
+    "visibility": 2,
+    "articulation": 3
+  },
+  {
+    "firstName": "Natalie",
+    "lastName": "Anderson",
+    "challengeSkill": 5,
+    "strategicLevel": 5,
+    "socialLevel": 4,
+    "visibility": 4,
+    "articulation": 4
+  },
+  {
+    "firstName": "Cirie",
+    "lastName": "Fields",
+    "challengeSkill": 1,
+    "strategicLevel": 5,
+    "socialLevel": 5,
+    "visibility": 4,
+    "articulation": 5
+  },
+  {
+    "firstName": "Tyson",
+    "lastName": "Apostol",
+    "challengeSkill": 5,
+    "strategicLevel": 4,
+    "socialLevel": 4,
+    "visibility": 5,
+    "articulation": 5
+  },
+  {
+    "firstName": "Sophie",
+    "lastName": "Clarke",
+    "challengeSkill": 3,
+    "strategicLevel": 5,
+    "socialLevel": 3,
+    "visibility": 2,
+    "articulation": 4
+  },
+  {
+    "firstName": "Michele",
+    "lastName": "Fitzgerald",
+    "challengeSkill": 3,
+    "strategicLevel": 3,
+    "socialLevel": 5,
+    "visibility": 2,
+    "articulation": 3
+  },
+  {
+    "firstName": "Wendell",
+    "lastName": "Holland",
+    "challengeSkill": 4,
+    "strategicLevel": 4,
+    "socialLevel": 5,
+    "visibility": 3,
+    "articulation": 5
+  },
+  {
+    "firstName": "Earl",
+    "lastName": "Cole",
+    "challengeSkill": 3,
+    "strategicLevel": 5,
+    "socialLevel": 5,
+    "visibility": 3,
+    "articulation": 5
+  },
+  {
+    "firstName": "Ethan",
+    "lastName": "Zohn",
+    "challengeSkill": 5,
+    "strategicLevel": 2,
+    "socialLevel": 5,
+    "visibility": 3,
+    "articulation": 4
+  },
+  {
+    "firstName": "Amber",
+    "lastName": "Brkich",
+    "challengeSkill": 2,
+    "strategicLevel": 3,
+    "socialLevel": 5,
+    "visibility": 2,
+    "articulation": 3
+  },
+  {
+    "firstName": "Fabio",
+    "lastName": "Birza",
+    "challengeSkill": 3,
+    "strategicLevel": 1,
+    "socialLevel": 5,
+    "visibility": 3,
+    "articulation": 2
+  },
+  {
+    "firstName": "Ben",
+    "lastName": "Driebergen",
+    "challengeSkill": 3,
+    "strategicLevel": 3,
+    "socialLevel": 3,
+    "visibility": 4,
+    "articulation": 3
+  }
+]
