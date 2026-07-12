@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { downloadJSON, downloadCSV } from '@/lib/export'
 
 interface WinnerStats {
   player: string
@@ -141,6 +142,23 @@ export default function MultipleResultsPage() {
 
         {/* Actions */}
         <div className="flex flex-wrap gap-4 justify-center pb-8">
+          <button
+            onClick={() =>
+              downloadCSV('win-rates.csv', [
+                ['Rank', 'Player', 'Wins', 'Win %'],
+                ...sortedWinners.map((w, i) => [i + 1, w.player, w.wins, w.percentage]),
+              ])
+            }
+            className="bg-green-700 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-lg transition-colors"
+          >
+            ⬇ Export CSV
+          </button>
+          <button
+            onClick={() => downloadJSON('simulation-results.json', results)}
+            className="bg-green-700 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-lg transition-colors"
+          >
+            ⬇ Export JSON
+          </button>
           <button
             onClick={() => router.push('/create')}
             className="bg-orange-600 hover:bg-orange-700 text-white font-bold py-3 px-8 rounded-lg transition-colors"

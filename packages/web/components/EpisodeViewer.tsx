@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
+import { motion } from 'framer-motion'
 import { useSimulationStore } from '@/lib/stores/simulation-store'
 import TribeDisplay from './TribeDisplay'
 import VoteReveal from './VoteReveal'
@@ -110,17 +111,27 @@ export default function EpisodeViewer() {
     <div className="space-y-6">
       {/* Phase Indicator */}
       {(swapEvent || mergeEvent) ? (
-        <div className="bg-gradient-to-r from-orange-600 to-red-600 rounded-lg p-6 text-center">
-          <div className="text-4xl mb-2">
+        <motion.div
+          key={`phase-${currentEpisodeIndex}`}
+          initial={{ opacity: 0, scale: 0.9, y: -12 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ type: 'spring', stiffness: 200, damping: 18 }}
+          className="bg-gradient-to-r from-orange-600 to-red-600 rounded-lg p-6 text-center"
+        >
+          <motion.div
+            className="text-4xl mb-2"
+            animate={{ scale: [1, 1.25, 1] }}
+            transition={{ duration: 0.8, repeat: Infinity, repeatDelay: 0.6 }}
+          >
             {mergeEvent ? '🔥' : '🔄'}
-          </div>
+          </motion.div>
           <h2 className="text-3xl font-bold text-white mb-2">
             {mergeEvent ? 'THE MERGE!' : 'TRIBE SWAP!'}
           </h2>
           <p className="text-gray-100">
             {mergeEvent ? 'Players merge into one tribe' : 'Players are shuffled into new tribes'}
           </p>
-        </div>
+        </motion.div>
       ) : null}
 
       {/* Idols Found */}
@@ -358,8 +369,19 @@ export default function EpisodeViewer() {
 
       {/* Winner Announcement - Show after Final Tribal */}
       {winner ? (
-        <div className="bg-gradient-to-br from-yellow-600 to-orange-600 rounded-lg p-8 text-center border-4 border-yellow-400">
-          <div className="text-6xl mb-4">👑</div>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.85 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ type: 'spring', stiffness: 180, damping: 16, delay: 0.2 }}
+          className="bg-gradient-to-br from-yellow-600 to-orange-600 rounded-lg p-8 text-center border-4 border-yellow-400"
+        >
+          <motion.div
+            className="text-6xl mb-4"
+            animate={{ rotate: [0, -12, 12, -8, 8, 0], scale: [1, 1.15, 1] }}
+            transition={{ duration: 1.2, delay: 0.4 }}
+          >
+            👑
+          </motion.div>
           <h2 className="text-5xl font-bold text-white mb-4">
             {winner.name}
           </h2>
@@ -369,7 +391,7 @@ export default function EpisodeViewer() {
           <p className="text-xl text-yellow-100">
             Won with {winner.votes} jury {winner.votes === 1 ? 'vote' : 'votes'}
           </p>
-        </div>
+        </motion.div>
       ) : null}
     </div>
   )

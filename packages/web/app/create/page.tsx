@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import samplePlayers from '@/lib/simulator/sample-players.json'
 
 interface PlayerInput {
   firstName: string
@@ -55,17 +56,34 @@ export default function CreatePage() {
   }
 
   const loadLegends = () => {
-    fetch('/lib/simulator/sample-players.json')
-      .then(res => res.json())
-      .then(data => {
-        setPlayers(data)
-      })
-      .catch(() => setError('Failed to load legends'))
+    // sample-players.json ships with the app; import directly rather than
+    // fetching (it isn't served as a static asset).
+    setPlayers(samplePlayers.map((p) => ({ ...EMPTY_PLAYER, ...p })))
+    setError(null)
   }
 
   const saveRoster = () => {
     localStorage.setItem('survivor-roster', JSON.stringify(players))
     alert('✅ Roster saved!')
+  }
+
+  const loadRoster = () => {
+    const saved = localStorage.getItem('survivor-roster')
+    if (!saved) {
+      setError('No saved roster found. Save one first.')
+      return
+    }
+    try {
+      const parsed = JSON.parse(saved)
+      if (Array.isArray(parsed) && parsed.length === 20) {
+        setPlayers(parsed.map((p) => ({ ...EMPTY_PLAYER, ...p })))
+        setError(null)
+      } else {
+        setError('Saved roster is invalid.')
+      }
+    } catch {
+      setError('Failed to load saved roster.')
+    }
   }
 
   const clearRoster = () => {
@@ -177,6 +195,12 @@ export default function CreatePage() {
             className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-colors"
           >
             Save Roster
+          </button>
+          <button
+            onClick={loadRoster}
+            className="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg transition-colors"
+          >
+            Load Saved
           </button>
           <button
             onClick={clearRoster}
